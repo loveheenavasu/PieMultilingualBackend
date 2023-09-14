@@ -17,28 +17,46 @@ const heroSectionController: HeroSectionController = {
       headerIcon: heroSection.imageUrl,
       extension: heroSection.extension,
     };
-    
+    let clientLogo1;
+    let clientLogo2;
+    let clientLogo3;
+    let clientLogo4;
     const heroSectionLogo = helperFunction.fileUpload(dataObj);
-    
-    let clientLogo1 = req.body.clientLogo1;
-    dataObj.headerIcon = clientLogo1.imageUrl;
-    dataObj.extension = clientLogo1.extension;
-    clientLogo1 = helperFunction.fileUpload(dataObj);
-    
-    let clientLogo2 = req.body.clientLogo2;
-    dataObj.headerIcon = clientLogo2.imageUrl;
-    dataObj.extension = clientLogo2.extension;
-    clientLogo2 = helperFunction.fileUpload(dataObj);
+    payload.data.forEach((item: any, index: number) => {
+      dataObj.headerIcon = item.imageUrl;
+      dataObj.extension = item.extension;
+      const fileName=helperFunction.fileUpload(dataObj)
+      console.log(fileName);
+      if (index == 0) {
+        clientLogo1=fileName
+      } else if(index==1) {
+        clientLogo2 = fileName;
+      } else if (index==2) {
+        clientLogo3=fileName;
+      } else if(index==3) {
+        clientLogo4=fileName;
+      }
+    });
 
-    let clientLogo3 = req.body.clientLogo3;
-    dataObj.headerIcon = clientLogo3.imageUrl;
-    dataObj.extension = clientLogo3.extension;
-    clientLogo3 = helperFunction.fileUpload(dataObj);
+    // let clientLogo1 = req.body.clientLogo1;
+    // dataObj.headerIcon = clientLogo1.imageUrl;
+    // dataObj.extension = clientLogo1.extension;
+    // clientLogo1 = helperFunction.fileUpload(dataObj);
 
-    let clientLogo4 = req.body.clientLogo4;
-    dataObj.headerIcon = clientLogo4.imageUrl;
-    dataObj.extension = clientLogo4.extension;
-    clientLogo4 = helperFunction.fileUpload(dataObj);
+    // let clientLogo2 = req.body.clientLogo2;
+    // dataObj.headerIcon = clientLogo2.imageUrl;
+    // dataObj.extension = clientLogo2.extension;
+    // clientLogo2 = helperFunction.fileUpload(dataObj);
+
+    // let clientLogo3 = req.body.clientLogo3;
+    // dataObj.headerIcon = clientLogo3.imageUrl;
+    // dataObj.extension = clientLogo3.extension;
+    // clientLogo3 = helperFunction.fileUpload(dataObj);
+
+    // let clientLogo4 = req.body.clientLogo4;
+    // dataObj.headerIcon = clientLogo4.imageUrl;
+    // dataObj.extension = clientLogo4.extension;
+    // clientLogo4 = helperFunction.fileUpload(dataObj);
 
     const heroSectionObj:any = {
       heroSectionLogo: heroSectionLogo,

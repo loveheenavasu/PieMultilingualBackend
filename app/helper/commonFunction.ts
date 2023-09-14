@@ -14,7 +14,6 @@ const helperFunction:HelperFunction ={
       }
       const filePath = path.join(uploadDir, filename);
       const binaryData = Buffer.from(base64Image, "base64");
-      console.log(binaryData, "binaryDatabinaryData")
       fs.writeFileSync(filePath, binaryData);
       return filename;
     }

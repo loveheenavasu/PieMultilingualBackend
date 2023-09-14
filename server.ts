@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { dbConnect } from "./app/startup/dbConnect";
 // import { PORT } from "./config";
 import express, { Request, Response } from "express";
-import { headerRoute, heroSectionRoute, menus } from "./app/routes";
+import { headerRoute, heroSectionRoute, menus, settingRoute } from "./app/routes";
 import  cors  from "cors";
 import path from "path";
 
@@ -18,6 +18,8 @@ app.use(headerRoute);
 app.use(heroSectionRoute);
 
 app.use(menus);
+
+app.use(settingRoute)
 
 dbConnect()
   .then((val) => {
