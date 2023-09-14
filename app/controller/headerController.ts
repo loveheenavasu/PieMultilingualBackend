@@ -41,7 +41,6 @@ const headerController: HeaderController = {
 
   getHeader: async (req, res) => {
     try {
-      console.log("hello");
       const header = await headerService.findOneheader({});
       res.status(200).json(header);
     } catch (error) {
@@ -52,11 +51,30 @@ const headerController: HeaderController = {
 
   updateHeader: async (req, res) => {
     const headerId = req.params.headerId;
+    const payload = req.body;
+    const fileData = {
+      headerIcon: payload.headerIcon,
+      extension: payload.extension,
+    };
+    if (payload.headerLogo) {
+      fileData.headerIcon = payload.headerLogo.icon;
+      fileData.extension = payload.headerLogo.extension;
+      payload.headerLogo = helperFunction.fileUpload(fileData);
+      await headerService.findOneAndUpdateHeader(
+        {},
+        { $set: payload.headerLogo }
+      );
+    }
     const updateData = req.body;
-    await headerService.findOneAndUpdateHeader(
-      { _id: headerId },
-      { $set: updateData }
-    );
+    if (payload.headerId) {
+        fileData.headerIcon = payload.data.icon;
+      fileData.extension = payload.data.extension;
+      payload.data = helperFunction.fileUpload(fileData);
+      await headerService.findOneAndUpdateHeader(
+        { "data._id": headerId },
+        { $set: { "data._id": payload.data } }
+      );
+    }
     res.status(200).json({ message: MESSAGES.HEADER_UPDATED_SUCCESSFULLY });
   },
 

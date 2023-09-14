@@ -1,24 +1,35 @@
-import { Document, FilterQuery } from "mongoose";
+import { Document, FilterQuery, UpdateQuery } from "mongoose";
 import { MenusDocument, menusModel } from "../models/menusModel";
 
 interface Menus {
-    createMenu:(payload:MenusDocument)=>Promise<MenusDocument|null>;
-    findOneMenu:(searchQuery:FilterQuery<MenusDocument>)=>Promise<MenusDocument|null>;
-    findOneAndDeleteMenu:(searchQuery:FilterQuery<MenusDocument>)=>Promise<MenusDocument|null>;
+  createMenu: (payload: MenusDocument) => Promise<MenusDocument | null>;
+  findOneMenu: (
+    searchQuery: FilterQuery<MenusDocument>
+  ) => Promise<MenusDocument | null>;
+  findOneAndUpdateMenu: (
+    searchQuery: FilterQuery<MenusDocument>,
+    updateQuery: UpdateQuery<MenusDocument>
+  ) => Promise<MenusDocument | null>;
+  findOneAndDeleteMenu: (
+    searchQuery: FilterQuery<MenusDocument>
+  ) => Promise<MenusDocument | null>;
 }
 
-const menuServices:Menus={
-    createMenu:async(payload)=>{
-        return await menusModel.create(payload);
-    },
+const menuServices: Menus = {
+  createMenu: async (payload) => {
+    return await menusModel.create(payload);
+  },
 
-    findOneMenu:async(searchQuery)=> {
-        return await menusModel.findOne(searchQuery);
-    },
-    
-    findOneAndDeleteMenu:async(searchQuery)=> {
-        return await menusModel.findOneAndDelete(searchQuery);
-    }
-}
+  findOneMenu: async (searchQuery) => {
+    return await menusModel.findOne(searchQuery);
+  },
 
-export {menuServices};
+  findOneAndUpdateMenu:async(searchQuery)=> {
+    return await menusModel.findOneAndUpdate(searchQuery);
+  },
+  findOneAndDeleteMenu: async (searchQuery) => {
+    return await menusModel.findOneAndDelete(searchQuery);
+  },
+};
+
+export { menuServices };

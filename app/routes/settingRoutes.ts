@@ -4,7 +4,7 @@ const settingRoute = express.Router();
 
 settingRoute.post("/setting", settingController.createSetting);
 settingRoute.get("/setting", settingController.getSetting);
-settingRoute.put("/setting/:settingId",settingController.updateSetting);
-settingRoute.delete("/setting",);
+settingRoute.put("/setting",settingController.updateSetting);
+settingRoute.delete("/setting",settingController.deleteSetting);
 
 export { settingRoute };

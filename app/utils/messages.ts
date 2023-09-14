@@ -8,6 +8,9 @@ interface Messages {
   MENU_DELETED_SUCCESSFULLY: string;
   SETTING_CREATED_SUCCESSFULLY: string;
   SETTING_UPDATED_SUCCESSFULLY: string;
+  SETTING_DELETED_SUCCESSFULLY:string;
+  MENUS_UPDATED_SUCCESSFULLY:string;
+  HERO_SECTION_UPDATED:string;
 }
 
 export const MESSAGES: Messages = {
@@ -20,4 +23,7 @@ export const MESSAGES: Messages = {
   MENU_DELETED_SUCCESSFULLY: "Menu deleted successfully",
   SETTING_CREATED_SUCCESSFULLY: "Setting created succesfully",
   SETTING_UPDATED_SUCCESSFULLY: "Setting updated successfully",
+  SETTING_DELETED_SUCCESSFULLY: "Setting deleted successfully",
+  MENUS_UPDATED_SUCCESSFULLY:"Menu updated successfully",
+  HERO_SECTION_UPDATED:"Hero section successfully",
 };

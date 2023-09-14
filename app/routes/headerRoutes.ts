@@ -6,8 +6,8 @@ headerRoute.post("/header", headerController.createHeader);
 
 headerRoute.get("/header", headerController.getHeader);
 
-headerRoute.put("/header",);
+headerRoute.put("/header",headerController.updateHeader);
 
-headerRoute.delete("/header/:headerId", headerController.deleteHeader);
+headerRoute.delete("/header", headerController.deleteHeader);
 
 export { headerRoute };
