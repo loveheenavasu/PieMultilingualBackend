@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { headerService } from "../services/headerService";
 import { MESSAGES } from "../utils/messages";
 import { helperFunction } from "../helper/commonFunction";
+import { headerModel } from "../models/headerModel";
 
 interface HeaderController {
   createHeader: (req: Request, res: Response) => Promise<void>;
@@ -31,7 +32,8 @@ const headerController: HeaderController = {
         dataObj.push(data);
       });
       payload.data = dataObj;
-      const headerData=await headerService.findOneAndDeleteHeader({});
+    //   const headerData=await headerService.findOneAndDeleteHeader({});
+    await headerModel.deleteMany({});
       await headerService.createHeader(payload);
       res.status(200).json({ message: MESSAGES.DATA_ADDED_SUCCESSFULLY });
     } catch (error) {

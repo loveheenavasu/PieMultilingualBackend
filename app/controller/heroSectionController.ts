@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { helperFunction } from "../helper/commonFunction";
 import { heroSectionService } from "../services/heroSectionService";
 import { MESSAGES } from "../utils/messages";
+import { heroSectionModel } from "../models/heroSectionModel";
 
 interface HeroSectionController {
   createHeroSection: (req: Request, res: Response) => Promise<void>;
@@ -45,7 +46,7 @@ const heroSectionController: HeroSectionController = {
       clientLogo3: clientLogo3,
       clientLogo4: clientLogo4,
     };
-    await heroSectionService.findOneAndDeleteSection({});
+    await heroSectionModel.deleteMany({});
     await heroSectionService.createHeroSection(heroSectionObj);
     res.status(200).json({ message: MESSAGES.HERO_SECTION_CREATED });
   },

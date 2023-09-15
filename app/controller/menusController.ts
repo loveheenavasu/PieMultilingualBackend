@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { MESSAGES } from "../utils/messages";
 import { Document } from "mongoose";
 import { menuServices } from "../services/menusService";
+import { menusModel } from "../models/menusModel";
 
 interface MenusController {
   createMenus: (req: Request, res: Response) => Promise<void>;
@@ -14,7 +15,8 @@ const menusController: MenusController = {
   createMenus: async (req, res) => {
     const payload = req.body;
     payload.menus = JSON.stringify(payload.menus);
-    await menuServices.findOneAndDeleteMenu({});
+    // await menuServices.findOneAndDeleteMenu({});
+    await menusModel.deleteMany({});
     await menuServices.createMenu(payload);
     res.status(200).json({ message: MESSAGES.MENU_DATA_ADDED_SUCCESSFULLY });
   },
