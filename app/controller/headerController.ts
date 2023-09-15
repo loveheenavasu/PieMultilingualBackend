@@ -50,29 +50,35 @@ const headerController: HeaderController = {
   },
 
   updateHeader: async (req, res) => {
-    const headerId = req.params.headerId;
     const payload = req.body;
     const fileData = {
       headerIcon: payload.headerIcon,
       extension: payload.extension,
     };
-    if (payload.headerLogo) {
-      fileData.headerIcon = payload.headerLogo.icon;
-      fileData.extension = payload.headerLogo.extension;
-      payload.headerLogo = helperFunction.fileUpload(fileData);
+    if (payload.headerIcon) {
+      fileData.headerIcon = payload.headerIcon;
+      fileData.extension = payload.extension;
+      const filePath = helperFunction.fileUpload(fileData);
+      console.log(filePath);
       await headerService.findOneAndUpdateHeader(
         {},
-        { $set: payload.headerLogo }
+        { $set: { headerLogo: filePath } }
       );
     }
-    const updateData = req.body;
-    if (payload.headerId) {
-        fileData.headerIcon = payload.data.icon;
+    if (payload.data._id) {
+      fileData.headerIcon = payload.data.icon;
       fileData.extension = payload.data.extension;
-      payload.data = helperFunction.fileUpload(fileData);
-      await headerService.findOneAndUpdateHeader(
-        { "data._id": headerId },
-        { $set: { "data._id": payload.data } }
+      payload.data.icon = helperFunction.fileUpload(fileData);
+      console.log(payload.data);
+    const headerSer =   await headerService.findOneAndUpdateHeader(
+        { "data.$._id": payload.data._id },
+        {
+          $set: {
+            "data.$.name": payload.data.name,
+            "data.$.link": payload.data.link,
+            "data.$.icon": payload.data.icon,
+          },
+        }
       );
     }
     res.status(200).json({ message: MESSAGES.HEADER_UPDATED_SUCCESSFULLY });

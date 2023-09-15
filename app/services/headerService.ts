@@ -6,8 +6,13 @@ interface HeaderService {
   findOneheader: (
     searchQuery: FilterQuery<HeaderDocument>
   ) => Promise<HeaderDocument | null>;
-  findOneAndUpdateHeader:(searchQuery:FilterQuery<HeaderDocument>,updateQuery:UpdateQuery<HeaderDocument>)=>Promise<HeaderDocument|null>;
-  findOneAndDeleteHeader:(searchQuery:FilterQuery<HeaderDocument>)=>Promise<HeaderDocument|null>;
+  findOneAndUpdateHeader: (
+    searchQuery: FilterQuery<HeaderDocument>,
+    updateQuery: UpdateQuery<HeaderDocument>
+  ) => Promise<HeaderDocument | null>;
+  findOneAndDeleteHeader: (
+    searchQuery: FilterQuery<HeaderDocument>
+  ) => Promise<HeaderDocument | null>;
 }
 
 const headerService: HeaderService = {
@@ -19,12 +24,12 @@ const headerService: HeaderService = {
     return await headerModel.findOne(searchQuery);
   },
 
-  findOneAndUpdateHeader:async(searchQuery)=>{
-    return await headerModel.findOneAndUpdate(searchQuery);
+  findOneAndUpdateHeader: async (searchQuery, updateQuery) => {
+    return await headerModel.findOneAndUpdate(searchQuery, updateQuery);
   },
-  findOneAndDeleteHeader:async(searchQuery)=> {
+  findOneAndDeleteHeader: async (searchQuery) => {
     return await headerModel.findOneAndDelete(searchQuery);
-  }
+  },
 };
 
-export { headerService }
+export { headerService };

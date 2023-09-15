@@ -24,8 +24,8 @@ const menuServices: Menus = {
     return await menusModel.findOne(searchQuery);
   },
 
-  findOneAndUpdateMenu:async(searchQuery)=> {
-    return await menusModel.findOneAndUpdate(searchQuery);
+  findOneAndUpdateMenu:async(searchQuery,updateQuery)=> {
+    return await menusModel.findOneAndUpdate(searchQuery,updateQuery);
   },
   findOneAndDeleteMenu: async (searchQuery) => {
     return await menusModel.findOneAndDelete(searchQuery);

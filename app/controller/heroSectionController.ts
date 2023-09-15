@@ -45,14 +45,12 @@ const heroSectionController: HeroSectionController = {
       clientLogo3: clientLogo3,
       clientLogo4: clientLogo4,
     };
-    console.log(heroSectionObj, "hero section obj");
     await heroSectionService.createHeroSection(heroSectionObj);
     res.status(200).json({ message: MESSAGES.HERO_SECTION_CREATED });
   },
-  
+
   getHeroSection: async (req, res) => {
     try {
-      console.log("hello");
       const header = await heroSectionService.findOneHeroSection({});
       res.status(200).json(header);
     } catch (error) {
@@ -68,8 +66,8 @@ const heroSectionController: HeroSectionController = {
       extension: "",
     };
     if (payload.heroSectionLogo) {
-      dataObj.headerIcon = payload.heroSection.imageUrl;
-      dataObj.extension = payload.heroSection.extension;
+      dataObj.headerIcon = payload.heroSectionLogo.imageUrl;
+      dataObj.extension = payload.heroSectionLogo.extension;
       payload.heroSectionLogo = helperFunction.fileUpload(dataObj);
     }
     if (payload.clientLogo1) {
@@ -86,11 +84,13 @@ const heroSectionController: HeroSectionController = {
       dataObj.headerIcon = payload.clientLogo3.imageUrl;
       dataObj.extension = payload.clientLogo3.extension;
       payload.clientLogo3 = helperFunction.fileUpload(dataObj);
+      console.log(payload.clientLogo3,"clientLogo=====");
     }
     if (payload.clientLogo4) {
       dataObj.headerIcon = payload.clientLogo4.imageUrl;
       dataObj.extension = payload.clientLogo4.extension;
       payload.clientLogo4 = helperFunction.fileUpload(dataObj);
+      console.log(payload.clientLogo4,"clientLogo=====");
     }
     await heroSectionService.findOneAndUpdateHeroSection({}, { $set: payload });
     res.status(200).json({ message: MESSAGES.HERO_SECTION_UPDATED });

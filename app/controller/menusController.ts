@@ -30,7 +30,8 @@ const menusController: MenusController = {
   updateMenu: async (req, res) => {
     const payload = req.body;
     payload.menus = JSON.stringify(payload.menus);
-    await menuServices.findOneAndUpdateMenu({}, { $set: payload });
+    await menuServices.findOneAndUpdateMenu({}, { $set: {menus:payload.menus} });
+    console.log('hello');
     res.status(200).json({ message: MESSAGES.MENUS_UPDATED_SUCCESSFULLY });
   },
 
