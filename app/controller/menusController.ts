@@ -14,6 +14,7 @@ const menusController: MenusController = {
   createMenus: async (req, res) => {
     const payload = req.body;
     payload.menus = JSON.stringify(payload.menus);
+    await menuServices.findOneAndDeleteMenu({});
     await menuServices.createMenu(payload);
     res.status(200).json({ message: MESSAGES.MENU_DATA_ADDED_SUCCESSFULLY });
   },

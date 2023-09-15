@@ -45,6 +45,7 @@ const heroSectionController: HeroSectionController = {
       clientLogo3: clientLogo3,
       clientLogo4: clientLogo4,
     };
+    await heroSectionService.findOneAndDeleteSection({});
     await heroSectionService.createHeroSection(heroSectionObj);
     res.status(200).json({ message: MESSAGES.HERO_SECTION_CREATED });
   },

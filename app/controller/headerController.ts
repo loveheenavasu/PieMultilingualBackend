@@ -31,6 +31,7 @@ const headerController: HeaderController = {
         dataObj.push(data);
       });
       payload.data = dataObj;
+      const headerData=await headerService.findOneAndDeleteHeader({});
       await headerService.createHeader(payload);
       res.status(200).json({ message: MESSAGES.DATA_ADDED_SUCCESSFULLY });
     } catch (error) {
