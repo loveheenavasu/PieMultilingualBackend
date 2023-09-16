@@ -9,7 +9,7 @@ import path from "path";
 dotenv.config();
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: '300mb' }));
 app.use(express.static(path.join(__dirname, 'upload')));
 app.use(cors<Request>());
 
