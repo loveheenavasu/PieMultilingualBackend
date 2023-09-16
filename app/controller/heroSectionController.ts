@@ -45,9 +45,10 @@ const heroSectionController: HeroSectionController = {
       dataArr.push(imageUrl);
     });
     const heroSectionObj: any = {
-      heroSection: heroSectionLogo,
+      heroSection: {imageUrl:heroSectionLogo},
       data: dataArr,
     };
+    console.log(heroSectionObj,'heroSection');
     // console.log(heroSectionObj,'heroSection obj===');
     await heroSectionModel.deleteMany({});
     const heroSectionCreated = await heroSectionService.createHeroSection(

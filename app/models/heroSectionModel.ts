@@ -4,13 +4,13 @@ interface POSTImageSchema {
   imageUrl: string;
 }
 export interface POSTJSON extends Document{
-  heroSection: POSTImageSchema;
+  heroSection: {imageUrl:POSTImageSchema};
   data: Array<POSTImageSchema>;
 }
 
 const heroSectionSchema = new mongoose.Schema<POSTJSON>(
   {
-    heroSection: { type: String ,required:true},
+    heroSection: {imageUrl:{ type: String ,required:true}},
     data: [{imageUrl:{ type: String }}],
   },
   { timestamps: true }
