@@ -26,30 +26,30 @@ const heroSectionController: HeroSectionController = {
     // console.log(isBase64(heroSection.base64))
     let heroSectionLogo;
     if (heroSection.base64) {
-      console.log("hello base 64 cah gaya");
       heroSectionLogo = helperFunction.fileUpload(dataObj);
     } else {
       heroSectionLogo = req.body.heroSection.imageUrl;
     }
     const dataArr: any = [];
     payload.data.forEach((item: POSTImageSchema, index: number) => {
-      let fileName;
-      let imageUrl;
+      if(index<4) {let fileName;
+      let imageObj;
       if (item.base64) {
         dataObj.headerIcon = item.base64;
         dataObj.extension = item.extension;
         fileName = helperFunction.fileUpload(dataObj);
-        imageUrl = { imageUrl: fileName };
-      }
+        imageObj = { imageUrl: fileName };
+        dataArr.push(imageObj);
+      } else {
+        imageObj={imageUrl:item.imageUrl}
+        dataArr.push(imageObj);
+      }}
 
-      dataArr.push(imageUrl);
     });
     const heroSectionObj: any = {
       heroSection: {imageUrl:heroSectionLogo},
       data: dataArr,
     };
-    console.log(heroSectionObj,'heroSection');
-    // console.log(heroSectionObj,'heroSection obj===');
     await heroSectionModel.deleteMany({});
     const heroSectionCreated = await heroSectionService.createHeroSection(
       heroSectionObj
