@@ -18,7 +18,11 @@ const headerController: HeaderController = {
         headerIcon: payload.headerIcon,
         extension: payload.extension,
       };
+    //   console.log(fileData,'filedaa');
       let filePath = helperFunction.fileUpload(fileData);
+    //   if(!filePath) {
+    //     res.status(400).json({message:"message invalid imagedata or extension"});
+    //   }
       payload.headerLogo = filePath;
       delete payload.extension;
       delete payload.headerIcon;
@@ -27,6 +31,9 @@ const headerController: HeaderController = {
         fileData.headerIcon = data.icon;
         fileData.extension = data.extension;
         filePath = helperFunction.fileUpload(fileData);
+        if(!filePath) {
+            res.status(400).json({message:"message invalid imagedata or extension"});
+          }
         data.icon = filePath;
         delete data.extension;
         dataObj.push(data);

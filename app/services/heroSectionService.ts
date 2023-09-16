@@ -1,23 +1,23 @@
 import { FilterQuery, UpdateQuery } from "mongoose";
 import {
-  HeroSectionDocument,
+  POSTJSON,
   heroSectionModel,
 } from "../models/heroSectionModel";
 
 interface HeroSectionService {
   createHeroSection: (
-    payload: HeroSectionDocument
-  ) => Promise<HeroSectionDocument | null>;
+    payload: POSTJSON
+  ) => Promise<POSTJSON | null>;
   findOneHeroSection: (
-    searchQuery: FilterQuery<HeroSectionDocument>
-  ) => Promise<HeroSectionDocument | null>;
+    searchQuery: FilterQuery<POSTJSON>
+  ) => Promise<POSTJSON | null>;
   findOneAndUpdateHeroSection: (
-    searchQuery: FilterQuery<HeroSectionDocument>,
-    updateQuery: UpdateQuery<HeroSectionDocument>
-  ) => Promise<HeroSectionDocument | null>;
+    searchQuery: FilterQuery<POSTJSON>,
+    updateQuery: UpdateQuery<POSTJSON>
+  ) => Promise<POSTJSON | null>;
   findOneAndDeleteSection: (
-    searchQuery: FilterQuery<HeroSectionDocument>
-  ) => Promise<HeroSectionDocument | null>;
+    searchQuery: FilterQuery<POSTJSON>
+  ) => Promise<POSTJSON | null>;
 }
 const heroSectionService: HeroSectionService = {
   createHeroSection: async (payload) => {

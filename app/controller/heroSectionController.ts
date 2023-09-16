@@ -10,45 +10,52 @@ interface HeroSectionController {
   updateHeroSection: (req: Request, res: Response) => Promise<void>;
   deleteHeroSection: (req: Request, res: Response) => Promise<void>;
 }
-
+interface POSTImageSchema {
+  extension: string;
+  imageUrl?: string;
+  base64: string;
+}
 const heroSectionController: HeroSectionController = {
   createHeroSection: async (req, res) => {
     const payload = req.body;
     const heroSection = req.body.heroSection;
     const dataObj = {
-      headerIcon: heroSection.imageUrl,
+      headerIcon: heroSection.base64,
       extension: heroSection.extension,
     };
-    let clientLogo1;
-    let clientLogo2;
-    let clientLogo3;
-    let clientLogo4;
-    const heroSectionLogo = helperFunction.fileUpload(dataObj);
-    payload.data.forEach((item: any, index: number) => {
-      dataObj.headerIcon = item.imageUrl;
-      dataObj.extension = item.extension;
-      const fileName = helperFunction.fileUpload(dataObj);
-      console.log(fileName);
-      if (index == 0) {
-        clientLogo1 = fileName;
-      } else if (index == 1) {
-        clientLogo2 = fileName;
-      } else if (index == 2) {
-        clientLogo3 = fileName;
-      } else if (index == 3) {
-        clientLogo4 = fileName;
+    // console.log(isBase64(heroSection.base64))
+    let heroSectionLogo;
+    if (heroSection.base64) {
+      console.log("hello base 64 cah gaya");
+      heroSectionLogo = helperFunction.fileUpload(dataObj);
+    } else {
+      heroSectionLogo = req.body.heroSection.imageUrl;
+    }
+    const dataArr: any = [];
+    payload.data.forEach((item: POSTImageSchema, index: number) => {
+      let fileName;
+      let imageUrl;
+      if (item.base64) {
+        dataObj.headerIcon = item.base64;
+        dataObj.extension = item.extension;
+        fileName = helperFunction.fileUpload(dataObj);
+        imageUrl = { imageUrl: fileName };
       }
+
+      dataArr.push(imageUrl);
     });
     const heroSectionObj: any = {
-      heroSectionLogo: heroSectionLogo,
-      clientLogo1: clientLogo1,
-      clientLogo2: clientLogo2,
-      clientLogo3: clientLogo3,
-      clientLogo4: clientLogo4,
+      heroSection: heroSectionLogo,
+      data: dataArr,
     };
+    // console.log(heroSectionObj,'heroSection obj===');
     await heroSectionModel.deleteMany({});
-    await heroSectionService.createHeroSection(heroSectionObj);
-    res.status(200).json({ message: MESSAGES.HERO_SECTION_CREATED });
+    const heroSectionCreated = await heroSectionService.createHeroSection(
+      heroSectionObj
+    );
+    res
+      .status(200)
+      .json({ message: "success", heroSection: heroSectionCreated });
   },
 
   getHeroSection: async (req, res) => {
@@ -86,13 +93,13 @@ const heroSectionController: HeroSectionController = {
       dataObj.headerIcon = payload.clientLogo3.imageUrl;
       dataObj.extension = payload.clientLogo3.extension;
       payload.clientLogo3 = helperFunction.fileUpload(dataObj);
-      console.log(payload.clientLogo3,"clientLogo=====");
+      console.log(payload.clientLogo3, "clientLogo=====");
     }
     if (payload.clientLogo4) {
       dataObj.headerIcon = payload.clientLogo4.imageUrl;
       dataObj.extension = payload.clientLogo4.extension;
       payload.clientLogo4 = helperFunction.fileUpload(dataObj);
-      console.log(payload.clientLogo4,"clientLogo=====");
+      console.log(payload.clientLogo4, "clientLogo=====");
     }
     await heroSectionService.findOneAndUpdateHeroSection({}, { $set: payload });
     res.status(200).json({ message: MESSAGES.HERO_SECTION_UPDATED });
