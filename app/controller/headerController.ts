@@ -18,29 +18,39 @@ const headerController: HeaderController = {
         headerIcon: payload.headerIcon,
         extension: payload.extension,
       };
-    //   console.log(fileData,'filedaa');
-      let filePath = helperFunction.fileUpload(fileData);
-    //   if(!filePath) {
-    //     res.status(400).json({message:"message invalid imagedata or extension"});
-    //   }
+
+      let filePath = payload.headerIcon;
+
+      if (payload.headerIconBase64) {
+        filePath = helperFunction.fileUpload({
+          headerIcon: payload.headerIconBase64,
+          extension: payload.extension,
+        });
+      }
+
       payload.headerLogo = filePath;
       delete payload.extension;
       delete payload.headerIcon;
       const dataObj: any = [];
-      payload.data.forEach((data: any) => {
-        fileData.headerIcon = data.icon;
-        fileData.extension = data.extension;
-        filePath = helperFunction.fileUpload(fileData);
-        if(!filePath) {
-            res.status(400).json({message:"message invalid imagedata or extension"});
+      (payload?.data || []).forEach((data: any) => {
+        if (data?.base64) {
+          console.log(data, 37);
+          fileData.headerIcon = data.base64;
+          fileData.extension = data.extension;
+          filePath = helperFunction.fileUpload(fileData);
+          if (!filePath) {
+            res
+              .status(400)
+              .json({ message: "message invalid imagedata or extension" });
           }
-        data.icon = filePath;
+          data.icon = filePath;
+        }
         delete data.extension;
         dataObj.push(data);
       });
       payload.data = dataObj;
-    //   const headerData=await headerService.findOneAndDeleteHeader({});
-    await headerModel.deleteMany({});
+      //   const headerData=await headerService.findOneAndDeleteHeader({});
+      await headerModel.deleteMany({});
       await headerService.createHeader(payload);
       res.status(200).json({ message: MESSAGES.DATA_ADDED_SUCCESSFULLY });
     } catch (error) {
@@ -80,7 +90,7 @@ const headerController: HeaderController = {
       fileData.extension = payload.data.extension;
       payload.data.icon = helperFunction.fileUpload(fileData);
       console.log(payload.data);
-    const headerSer =   await headerService.findOneAndUpdateHeader(
+      const headerSer = await headerService.findOneAndUpdateHeader(
         { "data.$._id": payload.data._id },
         {
           $set: {

@@ -18,7 +18,7 @@ const helperFunction: HelperFunction = {
     const filePath = path.join(uploadDir, filename);
     const binaryData = Buffer.from(base64Image, "base64");
     fs.writeFileSync(filePath, binaryData);
-    const imageUrl = `https://piemultilingualbackend.onrender.com/${filename}`;
+    const imageUrl = `${filename}`;
     return imageUrl;
   },
 };
