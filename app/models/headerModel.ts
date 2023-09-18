@@ -28,7 +28,8 @@ const headerSchema = new mongoose.Schema<HeaderDocument>({
       },
       icon: {
         type: String,
-        required: true,
+        required: false,
+        default:null
       },
     },
   ],
